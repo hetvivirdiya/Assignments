@@ -1,0 +1,17 @@
+3.Pick any app you use daily (like Zomato, Instagram, or Flipkart) and write a short feature request as if you were the product manager.
+Then, briefly describe which team members (designer, backend, mobile developer, tester) would be involved in delivering this feature and what each would do.
+
+Feature Request: Save Restaurants for Later
+
+As a Product Manager, I would like to add a “Save Restaurant” feature to the Zomato app.
+Users can tap a bookmark icon to save a restaurant and view all their saved restaurants in one place later.
+
+Team Members Involved:
+
+-> Designer: Designs the bookmark button and saved restaurant page.
+
+-> Backend Developer: Creates APIs to save, remove, and fetch saved restaurants.
+
+-> Mobile Developer: Implements the UI and connects it with the APIs.
+
+-> Tester: Tests saving, removing, loading, and error situations.
