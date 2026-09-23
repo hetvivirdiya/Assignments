@@ -1,0 +1,24 @@
+2. Structure of a Typical Mobile App Team
+
+A typical mobile application team can be structured like this:
+
+                    PRODUCT MANAGER
+                          |
+                          |
+             ---------------------------
+             |            |            |
+          DESIGNER    MOBILE DEV    BACKEND/API DEV
+             |            |            |
+             |            |            |
+             ----------- TESTER --------
+                          |
+                          |
+                     Final App
+
+Role of each team member:
+
+   1. Product Manager: Decides what features should be built, prepares requirements, and coordinates the team.
+   2. Designer: Creates the UI/UX design, wireframes, colors, screens, and user flow.
+   3. Mobile Developer: Converts the designs into a working mobile application using Flutter/Dart.
+   4. Backend/API Developer: Creates APIs, database logic, authentication, and server-side functionality.
+   5. Tester/QA: Tests the application, finds bugs, and checks whether the feature works correctly.
