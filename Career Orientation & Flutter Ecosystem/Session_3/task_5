@@ -1,0 +1,43 @@
+5.Modify your build() method so that tapping the ElevatedButton adds a new Text widget to the Column each time, showing the current time of tap.
+Store a list of Strings and use map() to generate Text widgets from the list.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<String> times = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Tap Time"),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                times.add(DateTime.now().toString());
+              });
+            },
+            child: Text("Tap Me"),
+          ),
+
+          for (String time in times)
+            Text(time),
+        ],
+      ),
+    );
+  }
+}
