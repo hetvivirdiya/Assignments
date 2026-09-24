@@ -1,0 +1,69 @@
+3.Build a simple Flipkart-style product listing screen using Flutter widgets: show a product image, name, price, and a Buy button in a Card widget. 
+Use a ListView to display at least three products.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: Text("Flipkart Products"),
+      ),
+      body: ListView(
+        children: [
+          Card(
+            child: Column(
+              children: [
+                Image.network(
+                  "https://via.placeholder.com/150",
+                  height: 150,
+                ),
+                Text("Mobile Phone"),
+                Text("₹15,000"),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Buy"),
+                ),
+              ],
+            ),
+          ),
+
+          Card(
+            child: Column(
+              children: [
+                Image.network(
+                  "https://via.placeholder.com/150",
+                  height: 150,
+                ),
+                Text("Laptop"),
+                Text("₹50,000"),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Buy"),
+                ),
+              ],
+            ),
+          ),
+
+          Card(
+            child: Column(
+              children: [
+                Image.network(
+                  "https://via.placeholder.com/150",
+                  height: 150,
+                ),
+                Text("Headphones"),
+                Text("₹2,000"),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Buy"),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  ));
+}
