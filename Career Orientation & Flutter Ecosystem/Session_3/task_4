@@ -1,0 +1,45 @@
+4.Rearrange the order of widgets inside your Column so that the Button appears at the top, followed by the two Text widgets.
+Run the app and describe how the UI changes.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: Text("My App"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {},
+              child: Text("Click Me"),
+            ),
+            Text("My Favorite Food: Pizza"),
+            Text("My Favorite IPL Team: CSK"),
+          ],
+        ),
+      ),
+    ),
+  ));
+}
+
+UI Changes
+
+Before:
+
+My Favorite Food: Pizza
+My Favorite IPL Team: CSK
+[ Click Me ]
+
+After:
+
+[ Click Me ]
+My Favorite Food: Pizza
+My Favorite IPL Team: CSK
+
+Description: The Button now appears at the top, followed by the favorite food and IPL team text. 
+The order of widgets in a Column determines the order in which they appear vertically on the screen.
