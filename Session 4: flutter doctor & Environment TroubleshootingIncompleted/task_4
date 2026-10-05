@@ -1,0 +1,35 @@
+4.Copy an error message from your flutter doctor output and paste it into ChatGPT. Ask for a step-by-step solution, then follow the suggested steps to 
+resolve the error. Share the exact prompt you used and whether the AI's answer helped you fix the issue.
+
+
+-->common flutter doctor error you can use as an example:
+
+[!] Android toolchain - develop for Android devices
+    ✗ Android SDK not found.
+      Download Android Studio from:
+      https://developer.android.com/studio
+
+
+1. Install Android Studio
+
+Download and install Android Studio from the official site.
+
+2. Open Android Studio
+
+  Go to:
+  More Actions → SDK Manager
+  Make sure these are installed:
+  
+  Android SDK
+  Android SDK Platform-Tools
+  Android SDK Command-line Tools
+
+3. Accept Android licenses
+
+  Open your terminal and run:
+  flutter doctor --android-licenses
+
+4. Check Flutter again
+
+    Run:
+    flutter doctor
