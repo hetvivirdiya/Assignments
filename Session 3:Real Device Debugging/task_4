@@ -1,0 +1,38 @@
+4.Change the app's background color and hot reload the changes while the app is running on your physical device to see the update instantly.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.blue,
+        appBar: AppBar(
+          title: const Text('My Flutter App'),
+        ),
+        body: const Center(
+          child: Text(
+            'Hello Flutter!',
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Then run:
+
+    flutter run
