@@ -1,0 +1,15 @@
+1.Enable USB debugging on your Android device, connect it to your computer, and use the 'flutter devices' command in your 
+terminal to verify that your device is detected by Flutter.
+
+
+1. Enable USB debugging and detect your device
+
+On your Android phone:
+    
+   1. Go to Settings → About phone.
+   2.Tap Build number 7 times to enable Developer options.
+   3. Go to Developer options and enable USB debugging.
+   4. Connect your phone to your computer with a USB cable.
+   5. Accept the “Allow USB debugging?” prompt on your phone.
+   6.In your terminal, run:
+            flutter devices
