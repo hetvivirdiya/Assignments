@@ -1,0 +1,14 @@
+5.Use an AI tool like ChatGPT to troubleshoot a connection issue you face while running your Flutter app on your device. 
+Paste the error message you get and follow the AI's suggested steps to resolve it. Summarize what worked for you in 2-3 lines.
+
+
+--->I used ChatGPT to troubleshoot the Flutter device connection issue. The problem was resolved by enabling USB debugging, 
+reconnecting the USB cable, and accepting the USB debugging authorization prompt on my phone. After that, flutter devices detected my device and
+flutter run launched the app successfully.
+
+Commands useful for documenting your session:
+
+        flutter doctor
+        flutter devices
+        adb devices
+        flutter run
