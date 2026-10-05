@@ -1,0 +1,24 @@
+2.Simulate a common Flutter environment error by temporarily renaming your Android Studio installation folder, then run flutter doctor again and 
+describe the specific error message you see.Restore the folder name after the test to avoid breaking your setup.
+
+1.Close Android Studio.
+2. Find your Android Studio installation folder.
+3.  Rename it temporarily, for example:
+      Android Studio
+      →
+      Android Studio_backup
+
+4.Open Terminal/CMD and run:
+      flutter doctor
+
+5.You should see an Android Studio-related error, such as:
+
+    [!] Android Studio
+        ✗ Unable to find Android Studio.
+
+6.Rename the folder back to its original name.
+
+7.Run:
+
+      flutter doctor
+
