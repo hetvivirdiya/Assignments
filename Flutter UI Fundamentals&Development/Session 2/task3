@@ -1,0 +1,57 @@
+3.Convert your SongTitleCard widget into a StatefulWidget and add a 'Like' heart icon button. When the button is tapped, toggle the heart color
+between grey and red using setState to show the liked/unliked state.
+
+
+import 'package:flutter/material.dart';
+
+class SongTitleCard extends StatefulWidget {
+  const SongTitleCard({super.key});
+
+  @override
+  State<SongTitleCard> createState() => _SongTitleCardState();
+}
+
+class _SongTitleCardState extends State<SongTitleCard> {
+  bool isLiked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(
+          Icons.music_note,
+          color: Colors.green,
+          size: 40,
+        ),
+        title: const Text(
+          'Perfect',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: const Text('Ed Sheeran'),
+        trailing: IconButton(
+          icon: Icon(
+            isLiked ? Icons.favorite : Icons.favorite_border,
+            color: isLiked ? Colors.red : Colors.grey,
+          ),
+          onPressed: () {
+            setState(() {
+              isLiked = !isLiked;
+            });
+          },
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: const Text('Now Playing')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: SongTitleCard(),
+      ),
+    ),
+  ));
+}
