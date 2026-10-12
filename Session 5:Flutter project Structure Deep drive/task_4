@@ -1,0 +1,75 @@
+4.Refactor your main.dart so that all widget classes are moved to a separate file called widgets.dart, and only the main() function and runApp() call remain 
+in main.dart.<br><br><em><strong>Constraint:</strong> main.dart should import widgets.dart and not contain any widget class definitions.</em>
+
+main.dart:----
+
+import 'package:flutter/material.dart';
+import 'widgets.dart';
+
+void main() {
+  runApp(const MyCoolApp());
+}
+
+widgets.dart:---
+
+import 'package:flutter/material.dart';
+
+class MyCoolApp extends StatelessWidget {
+  const MyCoolApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Foodie Explorer',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/profile': (context) => const ProfileScreen(),
+      },
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Foodie Explorer Home'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Hello from MyCoolApp!'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              child: const Text('Go to Profile'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Profile'),
+      ),
+      body: const Center(
+        child: Text('Welcome to My Profile!'),
+      ),
+    );
+  }
+}
