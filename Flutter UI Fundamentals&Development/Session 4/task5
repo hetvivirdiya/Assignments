@@ -1,0 +1,101 @@
+5.Refactor your Column or Row layout to remove all hard-coded pixel values for padding, margin, height, or width. Replace them with MediaQuery or use 
+SizedBox/Spacer for flexible spacing.Your layout should still look visually balanced on different screen sizes.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ResponsiveProductScreen(),
+    );
+  }
+}
+
+class ResponsiveProductScreen extends StatelessWidget {
+  const ResponsiveProductScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Responsive Product'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(screenWidth * 0.05),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: screenWidth * 0.9,
+              ),
+              child: Card(
+                elevation: 5,
+                child: Padding(
+                  padding: EdgeInsets.all(screenWidth * 0.04),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        height: screenHeight * 0.25,
+                        color: Colors.grey.shade200,
+                        child: Icon(
+                          Icons.laptop,
+                          size: screenWidth * 0.2,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
+                      Text(
+                        'Laptop Computer',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.055,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.01),
+                      Text(
+                        'Price: ₹45,999',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.045,
+                          color: Colors.green,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
+                      ElevatedButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Product selected!'),
+                            ),
+                          );
+                        },
+                        child: const Text('Buy Now'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
