@@ -1,0 +1,59 @@
+2.Build a horizontal row of three buttons (like Instagram's profile tabs: Posts, Reels, Tagged) using Expanded widgets so that each button always takes
+equal space, no matter the screen size.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: ProfileTabs(),
+  ));
+}
+
+class ProfileTabs extends StatelessWidget {
+  const ProfileTabs({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Profile')),
+      body: Column(
+        children: [
+          const SizedBox(height: 30),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text('Posts'),
+                ),
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text('Reels'),
+                ),
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text('Tagged'),
+                ),
+              ),
+            ],
+          ),
+          const Divider(),
+          const Expanded(
+            child: Center(
+              child: Text(
+                'Profile content appears here',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
