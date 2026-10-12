@@ -1,0 +1,71 @@
+5.Break down the widget tree of the main screen of your Flutter project by drawing or listing the parent-child relationship from MaterialApp down to the
+smallest widget you see. Start with MaterialApp, then Scaffold, then Column/Row, then Text/Icon, etc.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Widget Tree Example',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter Widget Tree'),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Welcome to Flutter!',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Icon(
+                Icons.flutter_dash,
+                color: Colors.blue,
+                size: 80,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  debugPrint('You pressed the button!');
+                },
+                child: const Text('Get Started'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget tree for Task 5
+text
+MyApp
+└── MaterialApp
+    └── Scaffold
+        ├── AppBar
+        │   └── Text
+        └── Center
+            └── Column
+                ├── Text
+                ├── SizedBox
+                ├── Icon
+                ├── SizedBox
+                └── ElevatedButton
+                    └── Text
