@@ -1,0 +1,82 @@
+5.Refactor your FollowerCountWidget to display a SnackBar message 'Milestone reached!' whenever the follower count crosses 10,000, updating the UI accordingly.
+
+
+import 'package:flutter/material.dart';
+
+class FollowerCountWidget extends StatefulWidget {
+  const FollowerCountWidget({super.key});
+
+  @override
+  State<FollowerCountWidget> createState() =>
+      _FollowerCountWidgetState();
+}
+
+class _FollowerCountWidgetState
+    extends State<FollowerCountWidget> {
+  int followers = 9200;
+
+  String formatFollowers(int count) {
+    if (count >= 1000) {
+      return '${(count / 1000).toStringAsFixed(1)}K';
+    }
+    return count.toString();
+  }
+
+  void incrementFollowers() {
+    final previousCount = followers;
+
+    setState(() {
+      followers += 1000;
+    });
+
+    if (previousCount < 10000 && followers >= 10000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Milestone reached!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(
+          Icons.people,
+          size: 60,
+          color: Colors.red,
+        ),
+        const Text(
+          'Subscribers',
+          style: TextStyle(fontSize: 20),
+        ),
+        Text(
+          formatFollowers(followers),
+          style: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: incrementFollowers,
+          child: const Text('Add 1,000 Followers'),
+        ),
+      ],
+    );
+  }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: const Text('Follower Counter')),
+      body: Center(
+        child: FollowerCountWidget(),
+      ),
+    ),
+  ));
+}
