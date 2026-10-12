@@ -1,0 +1,59 @@
+3.Refactor a layout that uses fixed height and width for a Flipkart-style product grid to use Flexible and Expanded widgets instead, so the grid adapts smoothly 
+on both mobile and tablet screens. Replace hardcoded dimensions with Flexible/Expanded and MediaQuery where needed.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: ProductGrid(),
+  ));
+}
+
+class ProductGrid extends StatelessWidget {
+  const ProductGrid({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flipkart Products'),
+        backgroundColor: Colors.blue,
+      ),
+      body: GridView.count(
+        crossAxisCount: width > 600 ? 4 : 2,
+        padding: const EdgeInsets.all(10),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        children: [
+          product(Icons.phone_android, 'Mobile', '₹14,999'),
+          product(Icons.laptop, 'Laptop', '₹49,999'),
+          product(Icons.headphones, 'Headphones', '₹1,999'),
+          product(Icons.watch, 'Smart Watch', '₹2,999'),
+        ],
+      ),
+    );
+  }
+
+  Widget product(IconData icon, String name, String price) {
+    return Card(
+      elevation: 4,
+      child: Column(
+        children: [
+          Expanded(
+            child: Icon(icon, size: 60, color: Colors.blue),
+          ),
+          Text(
+            name,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(price),
+          const SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+}
