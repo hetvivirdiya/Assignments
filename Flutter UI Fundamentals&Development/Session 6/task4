@@ -1,0 +1,66 @@
+4.Create a Zomato-style rating bar with 5 stars. When the user taps on any star, fill all stars up to that one and update the displayed rating using setState.
+
+
+import 'package:flutter/material.dart';
+
+class RatingBar extends StatefulWidget {
+  const RatingBar({super.key});
+
+  @override
+  State<RatingBar> createState() => _RatingBarState();
+}
+
+class _RatingBarState extends State<RatingBar> {
+  int rating = 0;
+
+  void updateRating(int value) {
+    setState(() {
+      rating = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Rate Your Experience')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'How was your food?',
+              style: TextStyle(fontSize: 24),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                int starValue = index + 1;
+
+                return IconButton(
+                  onPressed: () => updateRating(starValue),
+                  icon: Icon(
+                    starValue <= rating
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: starValue <= rating
+                        ? Colors.amber
+                        : Colors.grey,
+                    size: 35,
+                  ),
+                );
+              }),
+            ),
+            Text(
+              'Your Rating: $rating / 5',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
