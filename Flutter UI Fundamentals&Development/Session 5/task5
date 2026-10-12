@@ -1,0 +1,97 @@
+5.Add an asset image (such as a logo or album cover) to your project and display it at the top of SongInfoScreen using Image.asset(). Update pubspec.yaml
+to include your asset, and place the image inside the assets/ folder.
+
+Step 1: Add an image to your project
+Create an assets folder in your Flutter project and place your image inside it.
+
+Your project structure should look like this:
+
+text
+my_flutter_app/
+├── assets/
+│   └── album.jpg
+├── lib/
+│   └── main.dart
+└── pubspec.yaml
+
+Step 2: Update pubspec.yaml
+Open pubspec.yaml and add the asset path under flutter:. Make sure the indentation matches this example.
+
+yaml
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/album.jpg
+
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SongInfoScreen(),
+  ));
+}
+
+class SongInfoScreen extends StatelessWidget {
+  const SongInfoScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Song Information'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+      ),
+
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/album.jpg',
+              width: 150,
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+
+            const SizedBox(height: 15),
+
+            const Text(
+              'Perfect',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+
+            const Text(
+              'Artist: Ed Sheeran',
+              style: TextStyle(fontSize: 20),
+            ),
+
+            const SizedBox(height: 10),
+
+            ElevatedButton(
+              onPressed: () {
+                debugPrint('Playing Perfect');
+              },
+              child: const Text('Play Now'),
+            ),
+
+            const Icon(
+              Icons.favorite,
+              color: Colors.red,
+              size: 40,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
