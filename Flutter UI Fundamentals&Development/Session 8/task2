@@ -1,0 +1,35 @@
+2.Add a custom font (such as 'Poppins' or 'Montserrat') to your Flutter app and update your ThemeData to use this font for all text in the app.
+Add the font files to your assets, update pubspec.yaml, and set the fontFamily in ThemeData.
+
+Step 1: Download the Poppins font files from 
+Google Fonts — Poppins
+
+Step 2: Create this folder structure in your project:
+MyMusicTheme/
+├── assets/
+│   └── fonts/
+│       ├── Poppins-Regular.ttf
+│       └── Poppins-Bold.ttf
+├── lib/
+│   └── main.dart
+└── pubspec.yaml
+
+Step 3: Add the fonts to pubspec.yaml under flutter:.
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+
+Step 4: Update your ThemeData in main.dart:
+theme: ThemeData(
+  fontFamily: 'Poppins',
+  primaryColor: Colors.purple,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Colors.purple,
+    secondary: Colors.orange,
+  ),
+),
