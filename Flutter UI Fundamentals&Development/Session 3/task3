@@ -1,0 +1,64 @@
+3.Add two action icons (search and settings) to the AppBar in your Scaffold, and print a message to the console when each icon is tapped. Use the actions
+property of AppBar and IconButton widgets with onPressed callbacks.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const InstaProfileApp());
+}
+
+class InstaProfileApp extends StatelessWidget {
+  const InstaProfileApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'InstaProfile',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
+      home: const ProfileScreen(),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Profile'),
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              debugPrint('Search icon tapped!');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              debugPrint('Settings icon tapped!');
+            },
+          ),
+        ],
+      ),
+      backgroundColor: Colors.deepOrange,
+      body: const Center(
+        child: Text(
+          'Welcome to My Profile!',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
