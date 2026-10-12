@@ -1,0 +1,40 @@
+3.Design a custom button style in your ThemeData so that all ElevatedButtons in your app have rounded corners and a green background by default.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+      ),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('My Music')),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {},
+            child: const Text('Play Song'),
+          ),
+        ),
+      ),
+    );
+  }
+}
