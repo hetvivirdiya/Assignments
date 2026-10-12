@@ -1,0 +1,55 @@
+4.Create a local style override for just one Text widget in your app so that it appears in bold red, even though the global theme sets a different color 
+and weight for body text. Use the style property of Text to override the theme.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.blue,
+            fontSize: 18,
+          ),
+        ),
+      ),
+
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Text Style Override'),
+        ),
+
+        body: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('This is normal blue text'),
+
+              SizedBox(height: 20),
+
+              Text(
+                'This is bold red text',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
