@@ -1,0 +1,78 @@
+4.Place a FloatingActionButton at the bottom right of the screen that shows a plus (+) icon, and when tapped, displays a SnackBar with the message 'Add new post!'.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const InstaProfileApp());
+}
+
+class InstaProfileApp extends StatelessWidget {
+  const InstaProfileApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'InstaProfile',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
+      home: const ProfileScreen(),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Profile'),
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              debugPrint('Search icon tapped!');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              debugPrint('Settings icon tapped!');
+            },
+          ),
+        ],
+      ),
+      backgroundColor: Colors.deepOrange,
+      body: const Center(
+        child: Text(
+          'Welcome to My Profile!',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+      // Floating action button
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Add new post!'),
+            ),
+          );
+        },
+        backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
