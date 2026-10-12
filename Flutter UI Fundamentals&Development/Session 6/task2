@@ -1,0 +1,65 @@
+2.Build a simple playlist voting feature: show a song name and two buttons, 'Upvote' and 'Downvote'. When the user presses either button, update and display 
+the current vote count in real time using setState. Use onPressed for the buttons and update a voteCount variable inside setState.
+
+
+import 'package:flutter/material.dart';
+
+class PlaylistVoting extends StatefulWidget {
+  const PlaylistVoting({super.key});
+
+  @override
+  State<PlaylistVoting> createState() =>
+      _PlaylistVotingState();
+}
+
+class _PlaylistVotingState extends State<PlaylistVoting> {
+  int voteCount = 0;
+
+  void updateVote(int change) {
+    setState(() {
+      voteCount += change;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Playlist Voting')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.music_note, size: 60),
+            const Text(
+              'Perfect - Ed Sheeran',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              'Votes: $voteCount',
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () => updateVote(1),
+                  child: const Text('Upvote'),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () => updateVote(-1),
+                  child: const Text('Downvote'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
