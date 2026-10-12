@@ -1,0 +1,70 @@
+2.Refactor a screen that lists restaurants (using dummy data) so that each restaurant is displayed using a custom RestaurantCard widget. The RestaurantCard
+should accept restaurant name, cuisine, and rating as parameters and be reused for each item in the list.Pass the restaurant details as constructor arguments 
+to RestaurantCard and use ListView.builder to display multiple cards.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: RestaurantScreen(),
+  ));
+}
+
+class RestaurantCard extends StatelessWidget {
+  final String name;
+  final String cuisine;
+  final double rating;
+
+  RestaurantCard({
+    super.key,
+    required this.name,
+    required this.cuisine,
+    required this.rating,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(
+          Icons.restaurant,
+          color: Colors.red,
+        ),
+        title: Text(name),
+        subtitle: Text(cuisine),
+        trailing: Text('$rating'),
+      ),
+    );
+  }
+}
+
+class RestaurantScreen extends StatelessWidget {
+  const RestaurantScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Restaurants')),
+      body: ListView(
+        children: const [
+          RestaurantCard(
+            name: 'Pizza Palace',
+            cuisine: 'Italian',
+            rating: 4.5,
+          ),
+          RestaurantCard(
+            name: 'Burger House',
+            cuisine: 'Fast Food',
+            rating: 4.2,
+          ),
+          RestaurantCard(
+            name: 'Spice Garden',
+            cuisine: 'Indian',
+            rating: 4.7,
+          ),
+        ],
+      ),
+    );
+  }
+}
