@@ -1,0 +1,76 @@
+3.Build a reusable OfferBanner widget that takes an image URL and offer text as parameters and displays them together. Use this widget at the top of both a food
+delivery home screen and a shopping deals screen to demonstrate reusability.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: FoodHome(),
+  ));
+}
+
+class OfferBanner extends StatelessWidget {
+  final String imageUrl;
+  final String offerText;
+
+  const OfferBanner({
+    super.key,
+    required this.imageUrl,
+    required this.offerText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Image.network(
+            imageUrl,
+            height: 150,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: double.infinity,
+            color: Colors.orange,
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              offerText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FoodHome extends StatelessWidget {
+  const FoodHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Food Delivery')),
+      body: ListView(
+        children: const [
+          OfferBanner(
+            imageUrl: 'https://picsum.photos/600/200?food',
+            offerText: '50% OFF on Food',
+          ),
+          OfferBanner(
+            imageUrl: 'https://picsum.photos/600/200?shop',
+            offerText: 'Big Shopping Deals',
+          ),
+        ],
+      ),
+    );
+  }
+}
