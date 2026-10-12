@@ -1,0 +1,71 @@
+1.Create a reusable Flutter widget called PlaylistCard that displays a playlist cover image, playlist name, and number of songs, similar to Spotify's playlist cards.
+Use this widget to show three different playlists in a Column inside playlist_screen.dart.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: PlaylistScreen(),
+  ));
+}
+
+class PlaylistCard extends StatelessWidget {
+  final String image;
+  final String name;
+  final int songs;
+
+  const PlaylistCard({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.songs,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Image.network(
+          image,
+          width: 60,
+          height: 60,
+          fit: BoxFit.cover,
+        ),
+        title: Text(name),
+        subtitle: Text('$songs songs'),
+      ),
+    );
+  }
+}
+
+class PlaylistScreen extends StatelessWidget {
+  const PlaylistScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('My Playlists')),
+      body: const Column(
+        children: [
+          PlaylistCard(
+            image: 'https://picsum.photos/100?1',
+            name: 'Favorite Songs',
+            songs: 20,
+          ),
+          PlaylistCard(
+            image: 'https://picsum.photos/100?2',
+            name: 'Workout Mix',
+            songs: 15,
+          ),
+          PlaylistCard(
+            image: 'https://picsum.photos/100?3',
+            name: 'Chill Music',
+            songs: 12,
+          ),
+        ],
+      ),
+    );
+  }
+}
