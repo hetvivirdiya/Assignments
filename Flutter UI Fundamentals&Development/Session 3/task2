@@ -1,0 +1,50 @@
+2.Inside InstaProfile, use a Scaffold widget to create a home screen with an AppBar titled 'My Profile' and a background color matching Instagram's gradient 
+(use a solid purple or deep orange as a close match).
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const InstaProfileApp());
+}
+
+class InstaProfileApp extends StatelessWidget {
+  const InstaProfileApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'InstaProfile',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
+      home: const ProfileScreen(),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Profile'),
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+      ),
+      backgroundColor: Colors.deepOrange,
+      body: const Center(
+        child: Text(
+          'Welcome to My Profile!',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
