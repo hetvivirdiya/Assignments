@@ -1,0 +1,74 @@
+3.Implement a Flipkart-style product card with a product name and a 'Favorite' star icon. When the user taps anywhere on the card (not just the icon),
+toggle the star between filled (yellow) and outlined (grey) using onTap and setState. Wrap the card with a GestureDetector and update a boolean isFavorite.
+
+
+import 'package:flutter/material.dart';
+
+class ProductCard extends StatefulWidget {
+  const ProductCard({super.key});
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  bool isFavorite = false;
+
+  void toggleFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Product Card')),
+      body: Center(
+        child: GestureDetector(
+          onTap: toggleFavorite,
+          child: Card(
+            elevation: 5,
+            margin: const EdgeInsets.all(20),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.shopping_bag,
+                    size: 70,
+                    color: Colors.blue,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Wireless Headphones',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Icon(
+                    isFavorite
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: isFavorite
+                        ? Colors.yellow.shade700
+                        : Colors.grey,
+                    size: 35,
+                  ),
+                  Text(
+                    isFavorite
+                        ? 'Added to Favorites'
+                        : 'Tap to Favorite',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
