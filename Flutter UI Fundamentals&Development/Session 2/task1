@@ -1,0 +1,39 @@
+1.Create a Flutter widget called SongTitleCard that displays a static song title and artist name as seen on Spotify's Now Playing screen. 
+Use StatelessWidget for this implementation.
+
+import 'package:flutter/material.dart';
+
+class SongTitleCard extends StatelessWidget {
+  const SongTitleCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(
+          Icons.music_note,
+          color: Colors.green,
+          size: 40,
+        ),
+        title: const Text(
+          'Perfect',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: const Text('Ed Sheeran'),
+        trailing: const Icon(Icons.play_arrow),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: const Text('Now Playing')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: SongTitleCard(),
+      ),
+    ),
+  ));
+}
