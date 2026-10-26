@@ -1,0 +1,42 @@
+4.Write a Dart function formatFollowers(int count) that returns '1.5K' for 1500, '2M' for 2000000, or the actual number for less than 1000, similar to how 
+Instagram displays follower counts.Use conditional statements and string interpolation for formatting.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+
+  print(formatFollowers(1500));
+  print(formatFollowers(2000000));
+  print(formatFollowers(850));
+}
+
+String formatFollowers(int count) {
+  if (count >= 1000000) {
+    return '${count / 1000000}M';
+  } else if (count >= 1000) {
+    return '${count / 1000}K';
+  } else {
+    return count.toString();
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mini Instagram',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Mini Instagram'),
+        ),
+        body: const Center(
+          child: Text('Welcome to Mini Instagram!'),
+        ),
+      ),
+    );
+  }
+}
