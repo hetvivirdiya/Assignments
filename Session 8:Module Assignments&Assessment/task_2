@@ -1,0 +1,28 @@
+2.Inside your insta_clone project, edit main.dart to change the app title to 'Mini Instagram' and update the home screen text to 'Welcome to Mini Instagram!'.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mini Instagram',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Mini Instagram'),
+        ),
+        body: const Center(
+          child: Text('Welcome to Mini Instagram!'),
+        ),
+      ),
+    );
+  }
+}
+
