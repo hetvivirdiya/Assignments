@@ -1,0 +1,30 @@
+1.Create a new Flutter screen called OffersScreen that displays the text 'Today's Top Offers' at the top and a button labeled 'View All Deals' below it.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: OffersScreen()));
+}
+
+class OffersScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Offers")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Today's Top Offers",
+                style: TextStyle(fontSize: 24)),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text("View All Deals"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
