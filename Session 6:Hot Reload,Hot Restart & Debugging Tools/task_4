@@ -1,0 +1,31 @@
+4.Change your app's main theme color (primarySwatch) in MaterialApp and use hot restart to see the effect. Note the difference between hot reload and hot restart
+in how the change appears.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    theme: ThemeData(
+      primarySwatch: Colors.green,
+    ),
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Hello Flutter'),
+      ),
+      body: const Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    ),
+  ));
+}
+
+
+Difference Between Hot Reload and Hot Restart:--
+
+Hot Reload                                                              	Hot Restart
+
+Updates the UI without restarting the app.	                         Restarts the entire app.
+Preserves the current state.	                                       Resets the app state.
+Faster than hot restart.	                                           Slower than hot reload.
+Does not rerun main().	                                             Reruns main().
