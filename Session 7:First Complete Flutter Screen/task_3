@@ -1,0 +1,40 @@
+3.Add an Instagram-style 'Follow' button to your Flutter screen that toggles between 'Follow' and 'Following' when pressed, updating the button text and color.
+ Use a boolean variable in your StatefulWidget to track follow status and setState() to update the UI.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: FollowScreen()));
+}
+
+class FollowScreen extends StatefulWidget {
+  @override
+  State<FollowScreen> createState() => _FollowScreenState();
+}
+
+class _FollowScreenState extends State<FollowScreen> {
+  bool isFollowing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Instagram")),
+      body: Center(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor:
+                isFollowing ? Colors.grey : Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            setState(() {
+              isFollowing = !isFollowing;
+            });
+          },
+          child: Text(isFollowing ? "Following" : "Follow"),
+        ),
+      ),
+    );
+  }
+}
