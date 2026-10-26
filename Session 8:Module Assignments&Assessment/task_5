@@ -1,0 +1,6 @@
+5.List 3 ways to validate if your Flutter environment is set up correctly and describe what output or result you expect from each validation step.
+
+Validation step	                           Expected result
+1. Run flutter doctor	Shows                Flutter installation status and identifies any missing dependencies.
+2. Run flutter --version	                 Displays the installed Flutter and Dart SDK versions.
+3. Run flutter run inside insta_clone	     The app launches successfully on the selected emulator or physical device.
