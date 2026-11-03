@@ -1,0 +1,51 @@
+2.On the Home tab of your ServiceHub app, use a ListView to display a scrollable list of trending services (for example: Food Delivery, Movie Tickets,
+Mobile Recharge, Train Booking, and IPL Fantasy). Each item should show an icon and the service name.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: HomeScreen(),
+  ));
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  final List<Map<String, dynamic>> services = const [
+    {'name': 'Food Delivery', 'icon': Icons.fastfood},
+    {'name': 'Movie Tickets', 'icon': Icons.movie},
+    {'name': 'Mobile Recharge', 'icon': Icons.phone_android},
+    {'name': 'Train Booking', 'icon': Icons.train},
+    {'name': 'IPL Fantasy', 'icon': Icons.sports_cricket},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ServiceHub'),
+        backgroundColor: Colors.blue,
+      ),
+
+      body: ListView.builder(
+        itemCount: services.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: const EdgeInsets.all(10),
+            child: ListTile(
+              leading: Icon(
+                services[index]['icon'],
+                color: Colors.blue,
+                size: 30,
+              ),
+              title: Text(services[index]['name']),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
