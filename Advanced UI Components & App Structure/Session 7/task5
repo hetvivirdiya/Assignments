@@ -1,0 +1,135 @@
+5.Refactor your drawer code by extracting the drawer widget into a separate Dart file (e.g., app_drawer.dart) and import it into your main screen for better
+code organization.
+
+File 1: app_drawer.dart:--
+import 'package:flutter/material.dart';
+
+class AppDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Container(
+            height: 180,
+            padding: EdgeInsets.all(16),
+
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.green, Colors.black],
+              ),
+            ),
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  child: Icon(Icons.person),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Rahul",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "rahul@gmail.com",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+
+          ListTile(
+            leading: Icon(Icons.shopping_bag),
+            title: Text("My Orders"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OrdersScreen(),
+                ),
+              );
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text("Favourites"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FavouriteScreen(),
+                ),
+              );
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text("Logout"),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OrdersScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("My Orders")),
+      body: Center(child: Text("My Orders Screen")),
+    );
+  }
+}
+
+class FavouriteScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Favourites")),
+      body: Center(child: Text("Favourites Screen")),
+    );
+  }
+}
+
+File 2: main.dart:--
+import 'package:flutter/material.dart';
+import 'app_drawer.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My App"),
+        backgroundColor: Colors.green,
+      ),
+
+      drawer: AppDrawer(),
+
+      body: Center(
+        child: Text(
+          "Home Screen",
+          style: TextStyle(fontSize: 25),
+        ),
+      ),
+    );
+  }
+}
