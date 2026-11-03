@@ -1,0 +1,69 @@
+3.Maintain the selected index state in your app so that the correct BottomNavigationBar item stays highlighted when switching tabs.Use a State variable to track
+the current index and setState() to update it on tap.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  int index = 0;
+
+  List<String> names = [
+    "Songs",
+    "Albums",
+    "Profile"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Music App"),
+      ),
+
+      body: Center(
+        child: Text(
+          names[index],
+          style: TextStyle(fontSize: 30),
+        ),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            label: "Songs",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.album),
+            label: "Albums",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+      ),
+    );
+  }
+}
