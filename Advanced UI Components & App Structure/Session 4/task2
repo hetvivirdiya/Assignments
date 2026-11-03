@@ -1,0 +1,62 @@
+2.Modify your list so that a long-press on any food item opens a bottom sheet with two options: 'Add to Favourites' and 'Share'. Use GestureDetector or InkWell's 
+onLongPress property and showModalBottomSheet().
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: FoodScreen()));
+}
+
+class FoodScreen extends StatelessWidget {
+  List<String> foods = [
+    "Pizza",
+    "Burger",
+    "Dosa",
+    "Biryani",
+    "Pasta",
+    "Noodles",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Items")),
+      body: ListView(
+        children: foods.map((food) {
+          return InkWell(
+            onLongPress: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.favorite),
+                        title: Text("Add to Favourites"),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.share),
+                        title: Text("Share"),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: ListTile(
+              leading: Icon(Icons.fastfood),
+              title: Text(food),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
