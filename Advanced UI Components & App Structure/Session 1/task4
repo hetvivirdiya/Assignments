@@ -1,0 +1,42 @@
+4.Add vertical spacing of 12 pixels between each Card in your ListView.builder to improve readability, similar to how Zomato separates restaurant cards.
+You can use the separatorBuilder property of ListView.separated for this effect.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
+
+  List<String> teams = [
+    "CSK", "MI", "RCB", "KKR",
+    "RR", "SRH", "DC", "PBKS"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("IPL Teams")),
+      body: ListView.separated(
+        itemCount: teams.length,
+
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              leading: Icon(Icons.sports_cricket),
+              title: Text(teams[index]),
+            ),
+          );
+        },
+
+        separatorBuilder: (context, index) {
+          return SizedBox(height: 12);
+        },
+      ),
+    );
+  }
+}
