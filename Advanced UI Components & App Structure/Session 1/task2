@@ -1,0 +1,48 @@
+2.Modify your ListView to display each IPL team inside a Card widget with padding and a leading Icon (use Icons.sports_cricket), so the list looks similar to
+a sports app's team list.Use ListView's children property and wrap each Card with Padding for better spacing.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: Text("IPL Teams")),
+      body: ListView(
+        children: [
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("CSK"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("MI"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("RCB"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("KKR"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("RR"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("SRH"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("DC"),
+          )),
+          Card(child: ListTile(
+            leading: Icon(Icons.sports_cricket),
+            title: Text("PBKS"),
+          )),
+        ],
+      ),
+    ),
+  ));
+}
