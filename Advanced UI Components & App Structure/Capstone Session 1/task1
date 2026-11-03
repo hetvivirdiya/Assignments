@@ -1,0 +1,264 @@
+1.Create a new Flutter app called ServiceHub and implement a bottom navigation bar with three tabs: Home, Explore, and Profile. Each tab should display a simple
+icon and label.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: ServiceHub(),
+  ));
+}
+
+// Main App
+class ServiceHub extends StatefulWidget {
+  const ServiceHub({super.key});
+
+  @override
+  State<ServiceHub> createState() => _ServiceHubState();
+}
+
+class _ServiceHubState extends State<ServiceHub> {
+
+  int currentIndex = 0;
+
+  final List<Widget> screens = [
+    const HomeScreen(),
+    const ExploreScreen(),
+    const ProfileScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ServiceHub'),
+        backgroundColor: Colors.blue,
+      ),
+
+      body: screens[currentIndex],
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        selectedItemColor: Colors.blue,
+
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore),
+            label: 'Explore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Home Screen
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  final List<Map<String, dynamic>> services = const [
+    {'name': 'Food Delivery', 'icon': Icons.fastfood},
+    {'name': 'Movie Tickets', 'icon': Icons.movie},
+    {'name': 'Mobile Recharge', 'icon': Icons.phone_android},
+    {'name': 'Train Booking', 'icon': Icons.train},
+    {'name': 'IPL Fantasy', 'icon': Icons.sports_cricket},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: services.map((service) {
+        return ServiceListItem(
+          name: service['name'],
+          icon: service['icon'],
+        );
+      }).toList(),
+    );
+  }
+}
+
+// Reusable Service List Item
+class ServiceListItem extends StatelessWidget {
+  final String name;
+  final IconData icon;
+
+  const ServiceListItem({
+    super.key,
+    required this.name,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(10),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.blue, size: 30),
+        title: Text(name),
+        trailing: const Icon(Icons.arrow_forward_ios),
+
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsScreen(name: name),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// Explore Screen
+class ExploreScreen extends StatelessWidget {
+  const ExploreScreen({super.key});
+
+  final List<Map<String, dynamic>> categories = const [
+    {'name': 'Food', 'icon': Icons.restaurant},
+    {'name': 'Travel', 'icon': Icons.flight},
+    {'name': 'Shopping', 'icon': Icons.shopping_bag},
+    {'name': 'Entertainment', 'icon': Icons.movie},
+    {'name': 'Payments', 'icon': Icons.payment},
+    {'name': 'Sports', 'icon': Icons.sports_cricket},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      padding: const EdgeInsets.all(10),
+
+      children: categories.map((category) {
+        return CategoryGridItem(
+          name: category['name'],
+          icon: category['icon'],
+        );
+      }).toList(),
+    );
+  }
+}
+
+// Reusable Category Grid Item
+class CategoryGridItem extends StatelessWidget {
+  final String name;
+  final IconData icon;
+
+  const CategoryGridItem({
+    super.key,
+    required this.name,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailsScreen(name: name),
+          ),
+        );
+      },
+
+      child: Card(
+        elevation: 4,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 50, color: Colors.blue),
+            const SizedBox(height: 10),
+            Text(
+              name,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Profile Screen
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.account_circle, size: 80),
+          SizedBox(height: 10),
+          Text('My Profile', style: TextStyle(fontSize: 25)),
+        ],
+      ),
+    );
+  }
+}
+
+// Details Screen
+class DetailsScreen extends StatelessWidget {
+  final String name;
+
+  const DetailsScreen({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(name),
+        backgroundColor: Colors.blue,
+      ),
+
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.check_circle,
+                size: 70, color: Colors.green),
+
+            const SizedBox(height: 15),
+
+            Text(
+              name,
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              'Welcome to $name service!',
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
