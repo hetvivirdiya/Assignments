@@ -1,0 +1,47 @@
+2.Modify your PlaylistScreen so that the divider between playlist items is styled with a custom color (e.g., green) and thickness of 2 pixels to match Spotify's 
+branding. Use the Divider widget's color and thickness properties inside the separatorBuilder.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: PlaylistScreen()));
+}
+
+class PlaylistScreen extends StatelessWidget {
+  List<String> playlists = [
+    "Top Hits",
+    "Romantic Songs",
+    "Party Mix",
+    "Chill Vibes",
+    "Sad Songs",
+    "Workout Mix",
+    "Bollywood Hits",
+    "English Songs",
+    "Trending Songs",
+    "Old Classics"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Spotify Playlists")),
+      body: ListView.separated(
+        itemCount: playlists.length,
+
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.music_note),
+            title: Text(playlists[index]),
+          );
+        },
+
+        separatorBuilder: (context, index) {
+          return Divider(
+            color: Colors.green,
+            thickness: 2,
+          );
+        },
+      ),
+    );
+  }
+}
