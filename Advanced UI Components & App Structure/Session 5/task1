@@ -1,0 +1,56 @@
+1.Create a new Flutter app named music_nav_demo and add a BottomNavigationBar with three items: Songs, Albums, and Profile. Display the selected tab's name in the
+center of the screen.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int index = 0;
+
+  List<String> names = ["Songs", "Albums", "Profile"];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Music App")),
+
+      body: Center(
+        child: Text(
+          names[index],
+          style: TextStyle(fontSize: 30),
+        ),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            label: "Songs",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.album),
+            label: "Albums",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+      ),
+    );
+  }
+}
