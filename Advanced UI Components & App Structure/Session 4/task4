@@ -1,0 +1,51 @@
+4.Add a swipe gesture to your grid items so that swiping right on any team card triggers a SnackBar saying 'Added to Watchlist'. Use Dismissible or GestureDetector
+with onHorizontalDragEnd.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: TeamScreen()));
+}
+
+class TeamScreen extends StatelessWidget {
+  List<String> teams = [
+    "CSK",
+    "MI",
+    "RCB",
+    "KKR",
+    "RR",
+    "SRH",
+    "DC",
+    "PBKS"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("IPL Teams")),
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: teams.map((team) {
+          return Dismissible(
+            key: ValueKey(team),
+            direction: DismissDirection.startToEnd,
+            onDismissed: (direction) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Added to Watchlist")),
+              );
+            },
+            child: Card(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.sports_cricket, size: 50),
+                  Text(team),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
