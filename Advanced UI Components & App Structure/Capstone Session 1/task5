@@ -1,0 +1,157 @@
+5.Refactor your code to extract the service/category item widgets into separate reusable Dart classes (e.g., ServiceListItem and CategoryGridItem), and update your
+ListView and GridView to use these classes. This makes your code cleaner and easier to maintain as your app grows.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: HomeScreen(),
+  ));
+}
+
+// Home Screen
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  final List<String> services = const [
+    'Food Delivery',
+    'Movie Tickets',
+    'Mobile Recharge',
+    'Train Booking',
+    'IPL Fantasy',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('ServiceHub')),
+
+      body: ListView.builder(
+        itemCount: services.length,
+        itemBuilder: (context, index) {
+          return ServiceListItem(name: services[index]);
+        },
+      ),
+    );
+  }
+}
+
+// Reusable Service List Item
+class ServiceListItem extends StatelessWidget {
+  final String name;
+
+  const ServiceListItem({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(10),
+      child: ListTile(
+        leading: const Icon(Icons.apps, color: Colors.blue),
+        title: Text(name),
+
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsScreen(name: name),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// Explore Screen
+class ExploreScreen extends StatelessWidget {
+  const ExploreScreen({super.key});
+
+  final List<String> categories = const [
+    'Food',
+    'Travel',
+    'Shopping',
+    'Entertainment',
+    'Payments',
+    'Sports',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Explore')),
+
+      body: GridView.count(
+        crossAxisCount: 2,
+
+        children: categories.map((category) {
+          return CategoryGridItem(name: category);
+        }).toList(),
+      ),
+    );
+  }
+}
+
+// Reusable Category Grid Item
+class CategoryGridItem extends StatelessWidget {
+  final String name;
+
+  const CategoryGridItem({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailsScreen(name: name),
+          ),
+        );
+      },
+
+      child: Card(
+        margin: const EdgeInsets.all(10),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.category,
+                size: 45,
+                color: Colors.blue,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                name,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Details Screen
+class DetailsScreen extends StatelessWidget {
+  final String name;
+
+  const DetailsScreen({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(name)),
+
+      body: Center(
+        child: Text(
+          'Welcome to $name service!',
+          style: const TextStyle(fontSize: 22),
+        ),
+      ),
+    );
+  }
+}
