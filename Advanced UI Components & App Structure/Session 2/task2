@@ -1,0 +1,31 @@
+2.Customize your GridView to show 3 columns on large screens (tablet/desktop) and 2 columns on smaller screens (mobile), so the layout is responsive.
+Use MediaQuery to check screen width and set crossAxisCount accordingly.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    int columns = MediaQuery.of(context).size.width > 600 ? 3 : 2;
+
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Categories")),
+      body: GridView.count(
+        crossAxisCount: columns,
+        children: [
+          Card(child: Center(child: Text("Pizza"))),
+          Card(child: Center(child: Text("Biryani"))),
+          Card(child: Center(child: Text("Burger"))),
+          Card(child: Center(child: Text("Desserts"))),
+          Card(child: Center(child: Text("Chinese"))),
+          Card(child: Center(child: Text("South Indian"))),
+        ],
+      ),
+    );
+  }
+}
