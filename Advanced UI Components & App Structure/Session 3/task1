@@ -1,0 +1,44 @@
+1.Create a Flutter screen called PlaylistScreen that displays a vertical list of 10 Spotify-style playlist names using ListView.separated, adding a thin divider 
+between each playlist.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: PlaylistScreen()));
+}
+
+class PlaylistScreen extends StatelessWidget {
+  List<String> playlists = [
+    "Top Hits",
+    "Romantic Songs",
+    "Party Mix",
+    "Chill Vibes",
+    "Sad Songs",
+    "Workout Mix",
+    "Bollywood Hits",
+    "English Songs",
+    "Trending Songs",
+    "Old Classics"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Spotify Playlists")),
+      body: ListView.separated(
+        itemCount: playlists.length,
+
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.music_note),
+            title: Text(playlists[index]),
+          );
+        },
+
+        separatorBuilder: (context, index) {
+          return Divider();
+        },
+      ),
+    );
+  }
+}
