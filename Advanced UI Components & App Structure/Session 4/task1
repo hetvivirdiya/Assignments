@@ -1,0 +1,45 @@
+1.Create a Flutter app screen that displays a vertical list of 10 food items (e.g., Pizza, Burger, Dosa, etc.) using ListView, and wrap each item with an InkWell to
+show a SnackBar with the item name when tapped.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: FoodScreen()));
+}
+
+class FoodScreen extends StatelessWidget {
+  List<String> foods = [
+    "Pizza",
+    "Burger",
+    "Dosa",
+    "Biryani",
+    "Pasta",
+    "Sandwich",
+    "Noodles",
+    "Samosa",
+    "Idli",
+    "Pav Bhaji"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Items")),
+      body: ListView(
+        children: foods.map((food) {
+          return InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(food)),
+              );
+            },
+            child: ListTile(
+              leading: Icon(Icons.fastfood),
+              title: Text(food),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
