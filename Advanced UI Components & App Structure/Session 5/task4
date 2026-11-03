@@ -1,0 +1,81 @@
+4.Customize your BottomNavigationBar to use different icons and colors for the selected and unselected items, similar to how Instagram or Spotify highlights the 
+active tab.
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  int index = 0;
+
+  List<String> names = [
+    "Songs",
+    "Albums",
+    "Profile"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Music App"),
+        backgroundColor: Colors.green,
+      ),
+
+      body: Center(
+        child: Text(
+          names[index],
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
+
+        selectedIconTheme: IconThemeData(size: 30),
+        unselectedIconTheme: IconThemeData(size: 24),
+
+        showUnselectedLabels: true,
+
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            label: "Songs",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.album),
+            label: "Albums",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+      ),
+    );
+  }
+}
