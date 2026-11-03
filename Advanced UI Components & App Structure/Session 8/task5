@@ -1,0 +1,130 @@
+5.Refactor your dashboard UI to use a GridView instead of a ListView, arranging restaurant cards in two columns and ensuring the layout remains visually consistent
+across different screen sizes.Use GridView.count for a fixed number of columns and test on both portrait and landscape orientations.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: RestaurantGridScreen(),
+    );
+  }
+}
+
+class RestaurantGridScreen extends StatelessWidget {
+  const RestaurantGridScreen({super.key});
+
+  final List<Map<String, dynamic>> restaurants = const [
+    {
+      'name': 'Pizza Palace',
+      'cuisine': 'Italian',
+      'rating': 4.5,
+    },
+    {
+      'name': 'Burger House',
+      'cuisine': 'Fast Food',
+      'rating': 4.2,
+    },
+    {
+      'name': 'Spice Garden',
+      'cuisine': 'Indian',
+      'rating': 4.7,
+    },
+    {
+      'name': 'Chinese Corner',
+      'cuisine': 'Chinese',
+      'rating': 4.3,
+    },
+    {
+      'name': 'Food Junction',
+      'cuisine': 'Multi Cuisine',
+      'rating': 4.6,
+    },
+    {
+      'name': 'Green Bowl',
+      'cuisine': 'Healthy Food',
+      'rating': 4.4,
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Trending Restaurants'),
+        backgroundColor: Colors.orange,
+      ),
+
+      body: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        padding: const EdgeInsets.all(10),
+        childAspectRatio: 0.9,
+
+        children: restaurants.map((restaurant) {
+          return InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    '${restaurant['name']} selected!',
+                  ),
+                ),
+              );
+            },
+
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.restaurant,
+                      size: 50,
+                      color: Colors.orange,
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    Text(
+                      restaurant['name'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    Text(restaurant['cuisine']),
+
+                    const SizedBox(height: 6),
+
+                    Text(' ${restaurant['rating']}'),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
