@@ -1,0 +1,31 @@
+3.Add spacing between the cards in your GridView so that each card has at least 12 pixels of space on all sides.
+Set both crossAxisSpacing and mainAxisSpacing in GridView.count.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Categories")),
+      body: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        padding: EdgeInsets.all(12),
+        children: [
+          Card(child: Center(child: Text("Pizza"))),
+          Card(child: Center(child: Text("Biryani"))),
+          Card(child: Center(child: Text("Burger"))),
+          Card(child: Center(child: Text("Desserts"))),
+          Card(child: Center(child: Text("Chinese"))),
+          Card(child: Center(child: Text("South Indian"))),
+        ],
+      ),
+    );
+  }
+}
