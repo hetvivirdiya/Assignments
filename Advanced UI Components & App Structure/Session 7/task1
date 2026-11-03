@@ -1,0 +1,32 @@
+1.Create a Flutter app screen that includes a NavigationDrawer widget with a user profile header showing a circular avatar, user name, and email at the top.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("My App")),
+
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text("Rahul"),
+              accountEmail: Text("rahul@gmail.com"),
+              currentAccountPicture: CircleAvatar(
+                child: Icon(Icons.person, size: 40),
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      body: Center(child: Text("Home Screen")),
+    );
+  }
+}
