@@ -1,0 +1,71 @@
+4.Replace any hardcoded colors or font sizes in your drawer and tab screens with Theme.of(context) values to ensure consistent look and easy future updates.Do not 
+use direct color codes like Colors.red or fontSize: 22 — use theme values only.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.deepPurple,
+      ),
+      useMaterial3: true,
+    ),
+
+    home: const ThemeScreen(),
+  ));
+}
+
+class ThemeScreen extends StatelessWidget {
+  const ThemeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
+    return DefaultTabController(
+      length: 3,
+
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('ServiceHub'),
+          backgroundColor: theme.colorScheme.primary,
+          foregroundColor: theme.colorScheme.onPrimary,
+
+          bottom: TabBar(
+            labelColor: theme.colorScheme.onPrimary,
+            unselectedLabelColor:
+                theme.colorScheme.onPrimary.withValues(alpha: 0.7),
+
+            tabs: const [
+              Tab(text: 'Trending'),
+              Tab(text: 'Favorites'),
+              Tab(text: 'Nearby'),
+            ],
+          ),
+        ),
+
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+
+          child: const TabBarView(
+            children: [
+              Center(
+                child: Text('Trending Services'),
+              ),
+              Center(
+                child: Text('Favorite Services'),
+              ),
+              Center(
+                child: Text('Nearby Services'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
