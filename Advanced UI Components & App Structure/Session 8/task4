@@ -1,0 +1,71 @@
+4.Update your restaurant list items so that tapping on any item triggers a gesture handler that shows a SnackBar with the restaurant's name.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: RestaurantScreen(),
+    );
+  }
+}
+
+class RestaurantScreen extends StatelessWidget {
+  const RestaurantScreen({super.key});
+
+  final List<String> restaurants = const [
+    'Pizza Palace',
+    'Burger House',
+    'Spice Garden',
+    'Chinese Corner',
+    'Food Junction',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Trending Restaurants'),
+        backgroundColor: Colors.orange,
+      ),
+
+      body: ListView.builder(
+        itemCount: restaurants.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    '${restaurants[index]} selected!',
+                  ),
+                ),
+              );
+            },
+
+            child: Card(
+              margin: const EdgeInsets.all(10),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.restaurant,
+                  color: Colors.orange,
+                ),
+                title: Text(restaurants[index]),
+                subtitle: const Text('Delicious food available'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
