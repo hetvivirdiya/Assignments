@@ -1,0 +1,53 @@
+4.Refactor an existing ListView.builder-based chat list (showing sender and last message) to use ListView.separated, adding a subtle grey divider between each chat
+for better readability.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: ChatScreen()));
+}
+
+class ChatScreen extends StatelessWidget {
+  List<String> names = [
+    "Rahul",
+    "Amit",
+    "Priya",
+    "Neha",
+    "Rohit",
+  ];
+
+  List<String> messages = [
+    "Hello!",
+    "How are you?",
+    "Good Morning",
+    "Where are you?",
+    "See you soon",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Chats")),
+      body: ListView.separated(
+        itemCount: names.length,
+
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: CircleAvatar(
+              child: Text(names[index][0]),
+            ),
+            title: Text(names[index]),
+            subtitle: Text(messages[index]),
+          );
+        },
+
+        separatorBuilder: (context, index) {
+          return Divider(
+            color: Colors.grey,
+            thickness: 1,
+          );
+        },
+      ),
+    );
+  }
+}
