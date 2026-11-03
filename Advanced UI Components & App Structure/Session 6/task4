@@ -1,0 +1,44 @@
+4.Build a Flipkart-style product details page with tabs for 'Description', 'Reviews', and 'Q&A', each showing placeholder content inside TabBarView.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: ProductScreen()));
+}
+
+class ProductScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Product Details"),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "Description"),
+              Tab(text: "Reviews"),
+              Tab(text: "Q&A"),
+            ],
+          ),
+        ),
+
+        body: TabBarView(
+          children: [
+            Center(
+              child: Text("Product Description"),
+            ),
+
+            Center(
+              child: Text("Customer Reviews"),
+            ),
+
+            Center(
+              child: Text("Questions and Answers"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
