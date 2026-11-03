@@ -1,0 +1,101 @@
+5.Refactor your code to move the BottomNavigationBar into a separate widget file (e.g., custom_bottom_nav.dart) and import it into your main screen.
+
+File 1: custom_bottom_nav.dart:---
+import 'package:flutter/material.dart';
+
+class CustomBottomNav extends StatelessWidget {
+  final int index;
+  final Function(int) onTap;
+
+  CustomBottomNav({
+    required this.index,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: index,
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      onTap: onTap,
+
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.music_note),
+          label: "Songs",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.album),
+          label: "Albums",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: "Profile",
+        ),
+      ],
+    );
+  }
+}
+
+File 2: main.dart:--
+import 'package:flutter/material.dart';
+import 'custom_bottom_nav.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int index = 0;
+
+  List<Widget> screens = [
+    SongsScreen(),
+    AlbumsScreen(),
+    ProfileScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Music App")),
+
+      body: screens[index],
+
+      bottomNavigationBar: CustomBottomNav(
+        index: index,
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class SongsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Songs Screen"));
+  }
+}
+
+class AlbumsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Albums Screen"));
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Profile Screen"));
+  }
+}
