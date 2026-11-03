@@ -1,0 +1,53 @@
+4.Replace the category icons in your cards with network images (e.g., use real food images from the internet) and ensure the images are displayed in a circular 
+shape.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Categories")),
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: [
+          foodCard("Pizza",
+              "https://picsum.photos/200"),
+          foodCard("Burger",
+              "https://picsum.photos/201"),
+          foodCard("Biryani",
+              "https://picsum.photos/202"),
+          foodCard("Desserts",
+              "https://picsum.photos/203"),
+          foodCard("Chinese",
+              "https://picsum.photos/204"),
+          foodCard("South Indian",
+              "https://picsum.photos/205"),
+        ],
+      ),
+    );
+  }
+
+  Widget foodCard(String name, String image) {
+    return Card(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ClipOval(
+            child: Image.network(
+              image,
+              height: 80,
+              width: 80,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Text(name),
+        ],
+      ),
+    );
+  }
+}
