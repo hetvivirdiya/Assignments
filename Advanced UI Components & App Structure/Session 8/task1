@@ -1,0 +1,80 @@
+1.Create a Flutter dashboard screen for a food delivery app that displays a list of trending restaurants using a ListView, with each item showing the restaurant 
+name, cuisine, and rating.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: DashboardScreen(),
+    );
+  }
+}
+
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
+  final List<Map<String, dynamic>> restaurants = const [
+    {
+      'name': 'Pizza Palace',
+      'cuisine': 'Italian',
+      'rating': 4.5,
+    },
+    {
+      'name': 'Burger House',
+      'cuisine': 'Fast Food',
+      'rating': 4.2,
+    },
+    {
+      'name': 'Spice Garden',
+      'cuisine': 'Indian',
+      'rating': 4.7,
+    },
+    {
+      'name': 'Chinese Corner',
+      'cuisine': 'Chinese',
+      'rating': 4.3,
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Food Delivery'),
+        backgroundColor: Colors.orange,
+      ),
+
+      body: ListView.builder(
+        itemCount: restaurants.length,
+        itemBuilder: (context, index) {
+          final restaurant = restaurants[index];
+
+          return Card(
+            margin: const EdgeInsets.all(10),
+            child: ListTile(
+              leading: const Icon(
+                Icons.restaurant,
+                color: Colors.orange,
+                size: 35,
+              ),
+              title: Text(restaurant['name']),
+              subtitle: Text(restaurant['cuisine']),
+              trailing: Text(
+                ' ${restaurant['rating']}',
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
