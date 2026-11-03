@@ -1,0 +1,58 @@
+5.Refactor your GridView card widget by extracting it into a separate CategoryCard widget class, and update your main GridView to use this new widget.
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+
+  List<String> categories = [
+    "Pizza",
+    "Biryani",
+    "Burger",
+    "Desserts",
+    "Chinese",
+    "South Indian"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Categories")),
+
+      body: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        padding: EdgeInsets.all(12),
+
+        children: categories.map((item) {
+          return CategoryCard(name: item);
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  final String name;
+
+  CategoryCard({required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.fastfood, size: 40),
+            Text(name),
+          ],
+        ),
+      ),
+    );
+  }
+}
