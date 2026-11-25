@@ -1,0 +1,130 @@
+3.<p>Add a Settings screen (`settings_screen.dart`) to `study_planner`, opened from an AppBar icon, with a 'Dark mode' Switch that changes the whole app at once. 
+Keep the value in a `ChangeNotifier` class `AppSettings` shared with the `provider` package. Test: turn dark mode on, go back (home is dark too), then hot restart;
+the app must be light again. Hint: Wrap `MaterialApp` in a `Consumer<AppSettings>` and set its `themeMode`, `theme` and `darkTheme`.</p>
+
+Step 1: Install Provider
+flutter pub add provider
+
+Step 2: Create lib/app_settings.dart
+
+import 'package:flutter/material.dart';
+
+class AppSettings extends ChangeNotifier {
+  bool isDarkMode = false;
+
+  void toggleDarkMode(bool value) {
+    isDarkMode = value;
+    notifyListeners();
+  }
+}
+
+Step 3: Create lib/settings_screen.dart
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'app_settings.dart';
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
+
+      body: SwitchListTile(
+        title: const Text('Dark mode'),
+        value: settings.isDarkMode,
+        onChanged: (value) {
+          context.read<AppSettings>()
+              .toggleDarkMode(value);
+        },
+      ),
+    );
+  }
+}
+
+Step 4: Create lib/main.dart
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+import 'settings_screen.dart';
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppSettings(),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppSettings>(
+      builder: (context, settings, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+
+          title: 'Study Planner',
+
+          themeMode: settings.isDarkMode
+              ? ThemeMode.dark
+              : ThemeMode.light,
+
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primarySwatch: Colors.blue,
+          ),
+
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primarySwatch: Colors.blue,
+          ),
+
+          home: const HomeScreen(),
+        );
+      },
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Study Planner'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const SettingsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+
+      body: const Center(
+        child: Text('Welcome to Study Planner'),
+      ),
+    );
+  }
+}
