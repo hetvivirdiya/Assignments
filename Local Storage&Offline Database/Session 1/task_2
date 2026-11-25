@@ -1,0 +1,115 @@
+2.<p>Extend `study_planner` so the 6 tasks from a successful fetch are kept in a variable `_cachedTasks` inside the home screen's State. With the switch off, 
+'Fetch my tasks' must show the cached tasks under an orange banner 'Offline: showing last copy'; with no copy it keeps the old message. Test: fetch online, 
+switch off, fetch again, then hot restart, switch off and fetch again; the old message must return. Constraint: Do not use any storage package.</p>
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: HomeScreen(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  bool internet = true;
+  bool loading = false;
+
+  List<String> cachedTasks = [];
+  List<String> tasks = [];
+
+  Future<void> fetchTasks() async {
+
+    if (internet == false) {
+      setState(() {
+        tasks = cachedTasks;
+      });
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      tasks = [
+        'Maths - Trigonometry - 45 min',
+        'Science - Physics - 60 min',
+        'English - Grammar - 30 min',
+        'Computer - Programming - 50 min',
+        'History - Chapter 3 - 40 min',
+        'Chemistry - Organic Chemistry - 45 min',
+      ];
+
+      cachedTasks = List.from(tasks);
+      loading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Study Planner'),
+      ),
+
+      body: Column(
+        children: [
+
+          SwitchListTile(
+            title: const Text('Internet available'),
+            value: internet,
+            onChanged: (value) {
+              setState(() {
+                internet = value;
+              });
+            },
+          ),
+
+          ElevatedButton(
+            onPressed: fetchTasks,
+            child: const Text('Fetch my tasks'),
+          ),
+
+          if (loading)
+            const CircularProgressIndicator(),
+
+          if (!internet && cachedTasks.isEmpty)
+            const Text('No internet and no saved data'),
+
+          if (!internet && cachedTasks.isNotEmpty)
+            const Text(
+              'Offline: showing last copy',
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 18,
+              ),
+            ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: const Icon(Icons.book),
+                  title: Text(tasks[index]),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
