@@ -1,0 +1,118 @@
+1.<p>Build a Flutter app named `study_planner` with a Switch labelled 'Internet available' (on by default) and a 'Fetch my tasks' button. With the switch on, pressing
+the button shows a CircularProgressIndicator for 2 seconds, then 6 hard-coded tasks such as 'Maths - Trigonometry - 45 min' in a ListView. With the switch off,
+it shows 'No internet and no saved data'. Hint: Use an `async` method with `await Future.delayed(const Duration(seconds: 2))`, then `setState`. Constraint: Use no 
+packages.</p>
+
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool internetAvailable = true;
+  bool isLoading = false;
+
+  List<String> tasks = [];
+
+  Future<void> fetchTasks() async {
+    if (!internetAvailable) {
+      setState(() {
+        tasks = [];
+      });
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      tasks = [
+        'Maths - Trigonometry - 45 min',
+        'Science - Physics - 60 min',
+        'English - Grammar - 30 min',
+        'Computer - Programming - 50 min',
+        'History - Chapter 3 - 40 min',
+        'Chemistry - Organic Chemistry - 45 min',
+      ];
+
+      isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Study Planner'),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+
+        child: Column(
+          children: [
+            SwitchListTile(
+              title: const Text('Internet available'),
+              value: internetAvailable,
+              onChanged: (value) {
+                setState(() {
+                  internetAvailable = value;
+                });
+              },
+            ),
+
+            ElevatedButton(
+              onPressed: isLoading ? null : fetchTasks,
+              child: const Text('Fetch my tasks'),
+            ),
+
+            const SizedBox(height: 20),
+
+            if (isLoading)
+              const CircularProgressIndicator(),
+
+            if (!internetAvailable)
+              const Text('No internet and no saved data'),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: const Icon(Icons.book),
+                    title: Text(tasks[index]),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
