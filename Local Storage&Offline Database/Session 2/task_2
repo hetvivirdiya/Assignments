@@ -1,0 +1,192 @@
+2.<p>Make login status persistent in `study_planner`: save `loggedIn` with `setBool` under the key `logged_in` whenever the Log in / Log out button is pressed, and 
+load it in `main()` before `runApp`. Test: log in, stop and run again (still logged in), then log out, stop and run again ('Please log in' appears). Constraint: Do 
+not read SharedPreferences inside `build()`.</p>
+
+1. lib/app_settings.dart
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class AppSettings extends ChangeNotifier {
+  bool darkMode;
+  bool loggedIn;
+
+  AppSettings({
+    required this.darkMode,
+    required this.loggedIn,
+  });
+
+  // Dark mode
+  Future<void> toggleDarkMode(bool value) async {
+    darkMode = value;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('dark_mode', value);
+
+    notifyListeners();
+  }
+
+  // Login / Logout
+  Future<void> toggleLogin() async {
+    loggedIn = !loggedIn;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('logged_in', loggedIn);
+
+    notifyListeners();
+  }
+}
+
+2. lib/main.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'app_settings.dart';
+import 'study_planner_app.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+
+  final darkMode = prefs.getBool('dark_mode') ?? false;
+  final loggedIn = prefs.getBool('logged_in') ?? false;
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppSettings(
+        darkMode: darkMode,
+        loggedIn: loggedIn,
+      ),
+      child: const StudyPlannerApp(),
+    ),
+  );
+}
+
+3. lib/study_planner_app.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+import 'home_screen.dart';
+
+class StudyPlannerApp extends StatelessWidget {
+  const StudyPlannerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Study Planner',
+
+      theme: ThemeData(
+        brightness: Brightness.light,
+        useMaterial3: true,
+      ),
+
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
+      ),
+
+      themeMode: settings.darkMode
+          ? ThemeMode.dark
+          : ThemeMode.light,
+
+      home: const HomeScreen(),
+    );
+  }
+}
+
+4. lib/home_screen.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+import 'settings_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Study Planner'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SettingsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+
+      body: Center(
+        child: settings.loggedIn
+            ? ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Fetching tasks...'),
+                    ),
+                  );
+                },
+                child: const Text('Fetch'),
+              )
+            : const Text(
+                'Please log in',
+                style: TextStyle(fontSize: 20),
+              ),
+      ),
+    );
+  }
+}
+
+5. lib/settings_screen.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
+
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: settings.toggleLogin,
+            child: Text(
+              settings.loggedIn ? 'Log out' : 'Log in',
+            ),
+          ),
+
+          SwitchListTile(
+            title: const Text('Dark Mode'),
+            value: settings.darkMode,
+            onChanged: settings.toggleDarkMode,
+          ),
+        ],
+      ),
+    );
+  }
+}
