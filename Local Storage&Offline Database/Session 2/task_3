@@ -1,0 +1,291 @@
+3.<p>Add a 'Your name' TextField and a Save button to the Settings screen. Store the trimmed text with `setString` under `student_name`, and show 'Hi, <name>' in the
+home AppBar, or 'Hi, Student' when nothing is saved, loaded at launch. Test with 'Kavya Shah', then with only spaces (must not be saved), then restart the app. 
+Hint: Fill the `TextEditingController` with the saved name in `initState` and call `dispose()` on it.</p>
+
+1. lib/app_settings.dart
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class AppSettings extends ChangeNotifier {
+  bool darkMode;
+  bool loggedIn;
+  String studentName;
+
+  AppSettings({
+    required this.darkMode,
+    required this.loggedIn,
+    required this.studentName,
+  });
+
+  // Dark mode
+  Future<void> toggleDarkMode(bool value) async {
+    darkMode = value;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('dark_mode', value);
+
+    notifyListeners();
+  }
+
+  // Login / Logout
+  Future<void> toggleLogin() async {
+    loggedIn = !loggedIn;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('logged_in', loggedIn);
+
+    notifyListeners();
+  }
+
+  // Save student name
+  Future<void> saveName(String name) async {
+    final trimmedName = name.trim();
+
+    final prefs = await SharedPreferences.getInstance();
+
+    if (trimmedName.isEmpty) {
+      studentName = '';
+      await prefs.remove('student_name');
+    } else {
+      studentName = trimmedName;
+      await prefs.setString('student_name', trimmedName);
+    }
+
+    notifyListeners();
+  }
+}
+
+2. lib/main.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'app_settings.dart';
+import 'study_planner_app.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+
+  final darkMode = prefs.getBool('dark_mode') ?? false;
+  final loggedIn = prefs.getBool('logged_in') ?? false;
+  final studentName = prefs.getString('student_name') ?? '';
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppSettings(
+        darkMode: darkMode,
+        loggedIn: loggedIn,
+        studentName: studentName,
+      ),
+      child: const StudyPlannerApp(),
+    ),
+  );
+}
+
+3. lib/home_screen.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+import 'settings_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          settings.studentName.isEmpty
+              ? 'Hi, Student'
+              : 'Hi, ${settings.studentName}',
+        ),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SettingsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+
+      body: Center(
+        child: settings.loggedIn
+            ? ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Fetching tasks...'),
+                    ),
+                  );
+                },
+                child: const Text('Fetch'),
+              )
+            : const Text(
+                'Please log in',
+                style: TextStyle(fontSize: 20),
+              ),
+      ),
+    );
+  }
+}
+
+4. lib/settings_screen.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Load saved name into TextField
+    nameController = TextEditingController(
+      text: context.read<AppSettings>().studentName,
+    );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+
+        child: Column(
+          children: [
+            // Login / Logout
+            ElevatedButton(
+              onPressed: settings.toggleLogin,
+              child: Text(
+                settings.loggedIn ? 'Log out' : 'Log in',
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Dark Mode
+            SwitchListTile(
+              title: const Text('Dark Mode'),
+              value: settings.darkMode,
+              onChanged: settings.toggleDarkMode,
+            ),
+
+            const SizedBox(height: 20),
+
+            // Your name
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Your name',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                hintText: 'Enter your name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Save button
+            ElevatedButton(
+              onPressed: () async {
+                await settings.saveName(nameController.text);
+
+                if (!context.mounted) return;
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Name saved'),
+                  ),
+                );
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+5. lib/study_planner_app.dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_settings.dart';
+import 'home_screen.dart';
+
+class StudyPlannerApp extends StatelessWidget {
+  const StudyPlannerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettings>();
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Study Planner',
+
+      theme: ThemeData(
+        brightness: Brightness.light,
+        useMaterial3: true,
+      ),
+
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
+      ),
+
+      themeMode: settings.darkMode
+          ? ThemeMode.dark
+          : ThemeMode.light,
+
+      home: const HomeScreen(),
+    );
+  }
+}
